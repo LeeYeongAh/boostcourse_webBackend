@@ -15,6 +15,7 @@ public class GuestbookDao {
 	private static String dburl = "jdbc:mysql://localhost:3306/guestbook?useUnicode=true&characterEncoding=utf8&useSSL=FALSE&serverTimezone=UTC";
 	private static String dbUser = "guestbookuser";
 	private static String dbpasswd = "0000";
+	
     public List<Guestbook> getGuestbooks(){
         List<Guestbook> list = new ArrayList<>();
 
@@ -56,20 +57,15 @@ public class GuestbookDao {
     	
     	java.util.Date utilDate = guestbook.getRegdate();
     	java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-    	
-    	Long id = 1L;
-    	if(guestbook.getId() != null){
-    		ps.setLong(1, guestbook.getId());
-    	}else {
-    		ps.setLong(1, id);
-    	}
-    	id++;
-    	
+  
+    	ps.setLong(1, guestbook.getId());
     	ps.setString(2, guestbook.getName());
     	ps.setString(3, guestbook.getContent());
     	ps.setDate(4, sqlDate);
     	
     	ps.executeUpdate();
+    	
+    	
     	}catch(Exception ex) {
     		ex.printStackTrace();
     	}finally {
